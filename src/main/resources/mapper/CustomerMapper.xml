@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangming.rabbitmqdemo.repository.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.fangming.rabbitmqdemo.excel.Customer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="registry_time" jdbcType="TIMESTAMP" property="registryTime" />
+    <result column="subscribed" jdbcType="BIT" property="subscribed" />
+    <result column="customer_logo" jdbcType="VARCHAR" property="customerLogo" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <collection property="customerNames" ofType="com.fangming.rabbitmqdemo.excel.CustomerName">
+      <result column="name" property="name"/>
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    a.id, a.customer_id, a.shop_id, a.first_name, a.last_name, a.email, a.country, a.country_code, a.mobile,
+    a.registry_time, a.subscribed, a.customer_logo, a.tag, a.create_at, a.create_by, a.update_at, a.update_by,b.name
+  </sql>
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_customer a left join t_customer_name b on a.customer_id=b.customer_id
+    where shop_id=333
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fangming.rabbitmqdemo.excel.Customer" useGeneratedKeys="true">
+    insert into t_customer (customer_id, shop_id, first_name, 
+      last_name, email, country, 
+      country_code, mobile, registry_time, 
+      subscribed, customer_logo, tag, 
+      create_at, create_by, update_at, 
+      update_by)
+    values (#{customerId,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, #{firstName,jdbcType=VARCHAR}, 
+      #{lastName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{countryCode,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{registryTime,jdbcType=TIMESTAMP}, 
+      #{subscribed,jdbcType=BIT}, #{customerLogo,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fangming.rabbitmqdemo.excel.Customer" useGeneratedKeys="true">
+    insert into t_customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="firstName != null">
+        first_name,
+      </if>
+      <if test="lastName != null">
+        last_name,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="countryCode != null">
+        country_code,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="registryTime != null">
+        registry_time,
+      </if>
+      <if test="subscribed != null">
+        subscribed,
+      </if>
+      <if test="customerLogo != null">
+        customer_logo,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="registryTime != null">
+        #{registryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subscribed != null">
+        #{subscribed,jdbcType=BIT},
+      </if>
+      <if test="customerLogo != null">
+        #{customerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangming.rabbitmqdemo.excel.Customer">
+    update t_customer
+    <set>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null">
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="registryTime != null">
+        registry_time = #{registryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subscribed != null">
+        subscribed = #{subscribed,jdbcType=BIT},
+      </if>
+      <if test="customerLogo != null">
+        customer_logo = #{customerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangming.rabbitmqdemo.excel.Customer">
+    update t_customer
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      country_code = #{countryCode,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      registry_time = #{registryTime,jdbcType=TIMESTAMP},
+      subscribed = #{subscribed,jdbcType=BIT},
+      customer_logo = #{customerLogo,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
