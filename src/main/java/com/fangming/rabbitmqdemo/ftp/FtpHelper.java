@@ -20,9 +20,12 @@ import java.io.InputStream;
  */
 public class FtpHelper {
 
+
     private FTPClient ftp;
 
+
     public FtpHelper() {
+
 
     }
 
